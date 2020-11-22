@@ -18,19 +18,23 @@ const LICENSE = path.join(process.cwd(), "/LICENSE");
 router.get("/license", (req, res, next) => {
   fs.readFile(LICENSE, (err, license) => {
     if (err) {
-      return res.send(JSON.stringify({
-        err,
-        is_license: false,
-        license: null,
-        msg: "Cannot read license file",
-      }));
+      return res.send(
+        JSON.stringify({
+          err,
+          is_license: false,
+          license: null,
+          msg: "Cannot read license file",
+        })
+      );
     }
-    res.send(JSON.stringify({
-      err: null,
-      is_license: true,
-      license: license.toString(),
-      msg: "LICENSE sent successfully",
-    }));
+    res.send(
+      JSON.stringify({
+        err: null,
+        is_license: true,
+        license: license.toString(),
+        msg: "LICENSE sent successfully",
+      })
+    );
   });
 });
 
