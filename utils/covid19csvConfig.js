@@ -21,5 +21,22 @@ exports.enumCovid19 = [
   [ "이동경로", "route" ],
   [ "확진일", "confirmed_at" ],
   [ "등록일", "registered_at" ],
-  [ "수정일", "updated_at" ]
+  [ "수정일", "updated_at" ],
 ];
+
+exports.enumCovid19Output = [
+	[ "연번", "serial_no" ],
+	[ "확진일", "confirmed_at" ],
+	[ "환자번호", "patient_no" ],
+	[ "국적", "nationality" ],
+	[ "환자정보", "patient_info" ],
+	[ "지역", "district" ],
+	[ "여행력", "travel_history" ],
+	[ "접촉력", "contact_history" ],
+	[ "조치사항", "action" ],
+	[ "상태", "status" ],
+	[ "이동경로", "route" ],
+	[ "등록일", "registered_at" ],
+	[ "수정일", "updated_at" ],
+];
+

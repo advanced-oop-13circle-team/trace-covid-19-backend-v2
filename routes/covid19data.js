@@ -4,7 +4,7 @@ const iconv = require("iconv-lite");
 const csvtojson = require("csvtojson");
 const { convertArrayToCSV } = require("convert-array-to-csv");
 const { connDB } = require("@utils/connDB");
-const { csvFiles, enumCovid19 } = require("@utils/covid19csvConfig");
+const { csvFiles, enumCovid19, enumCovid19Output } = require("@utils/covid19csvConfig");
 
 const router = express.Router();
 
@@ -301,22 +301,28 @@ router.post("/download", (req, res, next) => {
     if (rows.length > 0) {
       const headers = [],
         arrRows = [];
-      enumCovid19.forEach((header) => headers.push(header[0]));
+      enumCovid19Output.forEach((header) => headers.push(header[0]));
       while (rows.length !== 0) {
         let row = rows.pop();
+				let rowOutput = {};
         for (let key in row) {
           if (key.indexOf("_at") !== -1) {
             let dt = new Date(row[key]);
-            row[key] = `${dt.getFullYear()}-${
-              dt.getMonth() + 1
-            }-${dt.getDate()} ${dt
-              .toTimeString()
-              .split(" ")
-              .shift()
-              .slice(0, -3)}`;
+						if(key === "confirmed_at") {
+							row[key] = `${dt.getMonth() + 1}.${dt.getDate()}.`;
+						} else {
+            	row[key] = `${dt.getFullYear()}-${
+            	  dt.getMonth() + 1
+            	}-${dt.getDate()} ${dt
+            	  .toTimeString()
+            	  .split(" ")
+            	  .shift()
+            	  .slice(0, -3)}`;
+						}
           }
         }
-        arrRows.push(Object.values(row));
+				enumCovid19Output.forEach((header) => rowOutput[header[1]] = row[header[1]]);
+        arrRows.push(Object.values(rowOutput));
       }
       const csvData = convertArrayToCSV(arrRows, {
         header: headers,
