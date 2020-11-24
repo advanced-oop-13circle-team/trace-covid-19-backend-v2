@@ -3,9 +3,12 @@ const express = require("express");
 const path = require("path");
 const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
+const schedule = require("node-schedule");
 const logger = require("morgan");
 
 require("module-alias/register");
+
+const { updateData } = require("@utils/updateData");
 
 const indexRouter = require("@routes/index");
 const covid19dataRouter = require("@routes/covid19data");
@@ -22,6 +25,10 @@ const dbConfig = {
   password: process.env.MYSQL_PW,
   database: process.env.MYSQL_DB,
 };
+
+let bgUpdateProc = schedule.scheduleJob("* 5 * * *", async () => {
+	await updateData();
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
