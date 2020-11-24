@@ -244,7 +244,7 @@ router.post("/upload", (req, res, next) => {
                   JSON.stringify({
                     err,
                     is_upload: false,
-                    msg: "Cannot delete temporary file - covid10csv-*.csv",
+                    msg: "Cannot delete temporary file - covid19csv-*.csv",
                   })
                 );
               }
