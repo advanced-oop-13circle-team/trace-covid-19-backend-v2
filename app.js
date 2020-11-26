@@ -26,7 +26,7 @@ const dbConfig = {
   database: process.env.MYSQL_DB,
 };
 
-let bgUpdateProc = schedule.scheduleJob("* 5 * * *", async () => {
+let bgUpdateProc = schedule.scheduleJob("0 */4 * * *", async () => {
 	await updateData();
 });
 
